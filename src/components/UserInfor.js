@@ -3,14 +3,24 @@ import React, { useEffect, useState } from "react";
 
 const UserInfor = () => {
   const [data, setData] = useState("");
+  const [courses, setCourse] = useState("");
 
   useEffect(() => {
     const getCourses = async () => {
       const result = await axios.get("localhost:5000/cousres");
-      setData(result.data);
+      setCourse(result.data);
     };
 
     getCourses();
+  }, []);
+
+  useEffect(() => {
+    const getUserInfor = async () => {
+      const result = await axios.get("localhost:5000/userinfor");
+      setData(result.data);
+    };
+
+    getUserInfor();
   }, []);
 
   return (
@@ -19,11 +29,11 @@ const UserInfor = () => {
       <table>
         <tr>
           <td>Student Id:</td>
-          <td>ititiu18221</td>
+          <td>{data.Id || "ititiu18221"}</td>
         </tr>
         <tr>
           <td>Student Name:</td>
-          <td>Tui là học sinh</td>
+          <td>{data.Name || "Tran Tien Dat"}</td>
         </tr>
         <tr>
           <td>Registed Courses:</td>

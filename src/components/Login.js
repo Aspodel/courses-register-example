@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -5,10 +6,14 @@ const Login = () => {
   const [data, setData] = useState({ username: "", password: "" });
   let history = useHistory();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (data.username === "student" && data.password === "student") {
+    const result = await axios.post("localhos:5000/login", data);
+
+    if (result) {
       console.log("Login successfully");
+      return history.push("/register");
+    } else {
       return history.push("/register");
     }
   };
